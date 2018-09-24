@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Phone contacts app</string>
+    <string name="loading">Loading…</string>
+    <string name="error">Unexpected error</string>
+
+    <string name="name">Name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="email">Email</string>
+    <string name="company">Company</string>
+    <string name="address">Address</string>
+    <string name="website">Website</string>
+
+    <string name="transition_id">20</string>
+    <string name="we_need">We need your permission to work.</string>
+    <string name="try_again">Try again</string>
+
+</resources>
