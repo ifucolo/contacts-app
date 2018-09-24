@@ -4,22 +4,22 @@ import android.Manifest
 import android.app.ProgressDialog
 import android.arch.lifecycle.Observer
 import android.content.pm.PackageManager
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.widget.ImageView
 import example.com.phonecontactsapp.R
-import example.com.phonecontactsapp.feature.home.domain.entity.Contact
+import example.com.phonecontactsapp.feature.detail.ui.ContactDetailActivity
+import example.com.phonecontactsapp.feature.home.domain.entity.ContactDetail
+import example.com.phonecontactsapp.utill.extensions.hide
 import example.com.phonecontactsapp.utill.extensions.progressDialog
+import example.com.phonecontactsapp.utill.extensions.show
 import example.com.phonecontactsapp.utill.extensions.toast
 import kotlinx.android.synthetic.main.activity_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.content.ContextCompat
-import android.widget.ImageView
-import example.com.phonecontactsapp.feature.detail.ui.ContactDetailActivity
-import example.com.phonecontactsapp.utill.extensions.hide
-import example.com.phonecontactsapp.utill.extensions.show
 
 
 class HomeActivity : AppCompatActivity() {
@@ -61,24 +61,24 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
-    private fun setupList(contacts: List<Contact>) = with(recyclerView) {
+    private fun setupList(contactDetails: List<ContactDetail>) = with(recyclerView) {
         show()
         layoutTryAgain.hide()
 
         val gridLayoutManager = GridLayoutManager(this@HomeActivity, 2)
 
         layoutManager = gridLayoutManager
-        adapter = HomeAdapter(contacts) { contact, imageView ->
+        adapter = HomeAdapter(contactDetails) { contact, imageView ->
             openDetail(contact, imageView)
         }
     }
 
-    private fun openDetail(contact: Contact, imageView: ImageView) {
+    private fun openDetail(contactDetail: ContactDetail, imageView: ImageView) {
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                 imageView,
                 getString(R.string.transition_id))
 
-        startActivity(ContactDetailActivity.launchIntent(this, contact), options.toBundle())
+        startActivity(ContactDetailActivity.launchIntent(this, contactDetail), options.toBundle())
     }
 
     private fun hideLoading() {

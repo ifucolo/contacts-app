@@ -2,11 +2,10 @@ package example.com.phonecontactsapp.feature.home.ui
 
 import android.arch.lifecycle.MutableLiveData
 import example.com.phonecontactsapp.feature.home.domain.ContactsSource
-import example.com.phonecontactsapp.feature.home.domain.entity.Contact
+import example.com.phonecontactsapp.feature.home.domain.entity.ContactDetail
 import example.com.phonecontactsapp.utill.ReactiveViewModel
 import example.com.phonecontactsapp.utill.RxUtils
 import io.reactivex.rxkotlin.plusAssign
-
 
 class HomeViewModel constructor(val source: ContactsSource) : ReactiveViewModel() {
 
@@ -28,6 +27,6 @@ class HomeViewModel constructor(val source: ContactsSource) : ReactiveViewModel(
                 )
     }
 
-    data class ResultUIModel(val list: List<Contact> = emptyList(), val error: Throwable? = null)
+    data class ResultUIModel(val list: List<ContactDetail> = emptyList(), val error: Throwable? = null)
 
 }

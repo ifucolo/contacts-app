@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Phone contacts app</string>
+    <string name="app_name">Phone contactDetails app</string>
     <string name="loading">Loading…</string>
     <string name="error">Unexpected error</string>
 
@@ -9,6 +9,7 @@
     <string name="company">Company</string>
     <string name="address">Address</string>
     <string name="website">Website</string>
+    <string name="birthday">BirthDay</string>
 
     <string name="transition_id">20</string>
     <string name="we_need">We need your permission to work.</string>
