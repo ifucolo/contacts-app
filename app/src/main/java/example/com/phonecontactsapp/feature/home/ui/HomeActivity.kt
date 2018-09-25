@@ -15,10 +15,7 @@ import android.widget.ImageView
 import example.com.phonecontactsapp.R
 import example.com.phonecontactsapp.feature.detail.ui.ContactDetailActivity
 import example.com.phonecontactsapp.feature.home.domain.entity.ContactDetail
-import example.com.phonecontactsapp.utill.extensions.hide
-import example.com.phonecontactsapp.utill.extensions.progressDialog
-import example.com.phonecontactsapp.utill.extensions.show
-import example.com.phonecontactsapp.utill.extensions.toast
+import example.com.phonecontactsapp.utill.extensions.*
 import kotlinx.android.synthetic.main.activity_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -28,7 +25,8 @@ class HomeActivity : AppCompatActivity() {
     private val viewModel: HomeViewModel by viewModel()
     private var progressDialog: ProgressDialog? = null
 
-    val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 12366
+    private val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 12366
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -62,8 +60,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupList(contactDetails: List<ContactDetail>) = with(recyclerView) {
-        show()
-        layoutTryAgain.hide()
+        setVisibilityLayout(false, true)
 
         val linearLayoutManager = LinearLayoutManager(this@HomeActivity)
 
@@ -92,8 +89,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showError(error: Throwable?) {
         toast(R.string.error)
-        layoutTryAgain.show()
-        recyclerView.hide()
+        setVisibilityLayout(true, false)
     }
 
     private fun checkPermission() {
@@ -103,15 +99,19 @@ class HomeActivity : AppCompatActivity() {
             viewModel.fetchContacts()
     }
 
+    private fun setVisibilityLayout(isShowTryAgain: Boolean, isShowList: Boolean) {
+        layoutTryAgain.visible(isShowTryAgain)
+        recyclerView.visible(isShowList)
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             MY_PERMISSIONS_REQUEST_READ_CONTACTS -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED))
                     checkPermission()
-                } else {
-                    layoutTryAgain.show()
-                    recyclerView.hide()
-                }
+                else
+                    setVisibilityLayout(true, false)
+
                 return
             }
         }

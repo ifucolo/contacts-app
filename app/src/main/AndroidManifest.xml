@@ -21,10 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".feature.detail.ui.ContactDetailActivity"></activity>
+
+        <activity android:name=".feature.detail.ui.ContactDetailActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
