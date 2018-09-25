@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.widget.ImageView
 import example.com.phonecontactsapp.R
 import example.com.phonecontactsapp.feature.detail.ui.ContactDetailActivity
@@ -49,7 +50,6 @@ class HomeActivity : AppCompatActivity() {
             when {
                 uiData?.list?.isNotEmpty() == true -> setupList(uiData.list)
                 uiData?.error != null -> showError(uiData.error)
-                else -> showEmptyState()
             }
         })
 
@@ -65,9 +65,9 @@ class HomeActivity : AppCompatActivity() {
         show()
         layoutTryAgain.hide()
 
-        val gridLayoutManager = GridLayoutManager(this@HomeActivity, 2)
+        val linearLayoutManager = LinearLayoutManager(this@HomeActivity)
 
-        layoutManager = gridLayoutManager
+        layoutManager = linearLayoutManager
         adapter = HomeAdapter(contactDetails) { contact, imageView ->
             openDetail(contact, imageView)
         }
@@ -92,26 +92,20 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showError(error: Throwable?) {
         toast(R.string.error)
-    }
-
-    private fun showEmptyState() {
-
+        layoutTryAgain.show()
+        recyclerView.hide()
     }
 
     private fun checkPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), MY_PERMISSIONS_REQUEST_READ_CONTACTS)
-        } else {
+        } else
             viewModel.fetchContacts()
-        }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             MY_PERMISSIONS_REQUEST_READ_CONTACTS -> {
-                // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     checkPermission()
                 } else {

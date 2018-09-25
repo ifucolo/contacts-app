@@ -9,7 +9,6 @@ class PhoneContactApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Contacts.initialize(this);
 
         startKoin(this, listOf(contactModule))
 

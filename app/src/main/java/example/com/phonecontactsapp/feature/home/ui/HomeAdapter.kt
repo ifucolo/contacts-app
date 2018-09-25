@@ -19,6 +19,8 @@ class HomeAdapter constructor(val contactDetails: List<ContactDetail>, val liste
         Glide.with(viewHolder.itemView.context)
                 .load(contact.imgUrl)
                 .centerCrop()
+                .error(R.drawable.ic_user)
+                .placeholder(R.drawable.ic_user)
                 .into(viewHolder.itemView.imgContact)
 
         viewHolder.itemView.setOnClickListener {
