@@ -20,6 +20,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    signingConfigs {
+        holonis {
+            keyAlias 'contact-app'
+            keyPassword '201192'
+            storePassword '201192'
+        }
+    }
 }
 
 dependencies {
